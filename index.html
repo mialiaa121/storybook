@@ -97,6 +97,7 @@ pre.prompt{white-space:pre-wrap;word-wrap:break-word;font:inherit;font-size:14px
     </div>
   </header>
 
+  <noscript><div class="card"><h2>JavaScript nonaktif</h2><p class="status">Aktifkan JavaScript di browser agar opsi tampil.</p></div></noscript>
   <form id="form" onsubmit="return false"></form>
 
   <section id="out" class="hidden" aria-live="polite">
@@ -223,7 +224,7 @@ function render(){
           if([...holder.children].some(c=>c.textContent.toLowerCase()===v.toLowerCase())){inp.value="";return}
           state[f.id].add(v); addChip(v); inp.value="";
         };
-        w.querySelector("button").onclick=add;
+        w.querySelector("#ab_"+f.id).onclick=add;
         inp.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();add()}});
       }
       body.appendChild(w);
@@ -261,6 +262,4 @@ function buildMaster(v){
     (fitur.includes("Lift-the-flap")?", jendela lift-the-flap dengan sudut membulat dan ilustrasi kejutan di baliknya":"")+
     (touch&&v.tekstur.length?", fitur touch-and-feel berupa tekstur "+list(v.tekstur.map(lc)):"")+
     (fitur.includes("Die-cut")?", serta die-cut berupa potongan halaman berbentuk karakter, jendela lingkaran, siluet hewan, atau lubang untuk mengintip halaman berikutnya":"")+
-    (fitur.includes("Pull-tab")?", pull-tab geser yang menggerakkan elemen adegan":"")+
-    (fitur.includes("Cermin mini")?", cermin mini yang aman untuk anak":"")+
-    (fitur.includes("Tombol suara")?", tombol suara pada halaman":
+    (fitur.includes("Pull-tab")?", pull-tab geser yang menggerakkan elemen adegan"
