@@ -4,86 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Storybook Generator</title>
-<style>
-:root{
-  --bg:#150929; --panel:#21103f; --panel2:#2b1652; --line:#432580;
-  --violet:#8e5cf7; --violet-d:#5b2fc0; --lav:#ebe2ff; --mute:#a893d8; --gold:#ffcf5c; --gold-d:#e8aa1f;
-  --ok:#7ee0a8; --err:#ff8d9b;
-  color-scheme: dark;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-html{-webkit-text-size-adjust:100%}
-body{
-  background:radial-gradient(1200px 500px at 50% -120px,#3a1a7a 0%,var(--bg) 62%) no-repeat,var(--bg);
-  color:var(--lav);
-  font-family:"Nunito","Quicksand",ui-rounded,"SF Pro Rounded",system-ui,-apple-system,"Segoe UI",sans-serif;
-  line-height:1.5;padding-bottom:110px;
-}
-.wrap{max-width:720px;margin:0 auto;padding:0 16px}
-header{padding:28px 0 18px;display:flex;align-items:center;gap:14px}
-.logo{width:64px;height:64px;border-radius:20px;background:linear-gradient(145deg,#7a47e0,#4a22a0);border:2px solid var(--line);box-shadow:0 0 0 5px rgba(142,92,247,.15),0 10px 30px rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;font-size:32px;flex:none}
-h1{font-size:clamp(26px,7vw,36px);line-height:1.05;font-weight:900;letter-spacing:-.02em;color:#fff}
-.tag{color:var(--mute);font-size:14px;margin-top:4px}
-.by{font-size:13px;font-weight:600;color:var(--mute);margin-top:4px}
-.by strong{color:var(--gold);font-weight:800}
-.foot{text-align:center;font-size:13px;color:var(--mute);margin:26px 0 8px}
-.foot strong{color:var(--gold);font-weight:800}
-
-details{background:var(--panel);border:1.5px solid var(--line);border-radius:22px;margin-bottom:12px;overflow:hidden}
-summary{list-style:none;cursor:pointer;padding:16px 18px;display:flex;align-items:center;justify-content:space-between;font-weight:800;font-size:17px;color:#fff;min-height:56px}
-summary::-webkit-details-marker{display:none}
-summary .sub{font-weight:600;font-size:13px;color:var(--mute);margin-left:8px}
-summary::after{content:"";width:10px;height:10px;border-right:2.5px solid var(--gold);border-bottom:2.5px solid var(--gold);transform:rotate(45deg);transition:transform .2s;margin-left:12px;flex:none;margin-top:-4px}
-details[open] summary::after{transform:rotate(225deg);margin-top:4px}
-summary:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
-.body{padding:2px 18px 18px;display:grid;gap:16px}
-.field label.l{display:block;font-weight:800;font-size:14px;margin-bottom:6px;color:var(--lav)}
-select,input[type=text],textarea{
-  width:100%;background:var(--bg);color:#fff;border:1.5px solid var(--line);border-radius:14px;
-  padding:13px 14px;font:inherit;font-size:16px;appearance:none;-webkit-appearance:none}
-select{background-image:linear-gradient(45deg,transparent 50%,var(--gold) 50%),linear-gradient(135deg,var(--gold) 50%,transparent 50%);
-  background-position:calc(100% - 20px) 52%,calc(100% - 14px) 52%;background-size:6px 6px,6px 6px;background-repeat:no-repeat;padding-right:38px}
-select:focus,input:focus,textarea:focus{border-color:var(--violet)}
-.custom{margin-top:8px}
-.custom input{border-color:var(--violet);background:#1d0e3a}
-.hidden{display:none!important}
-.chips{display:flex;flex-wrap:wrap;gap:8px}
-.chip{border:1.5px solid var(--line);background:var(--bg);color:var(--lav);border-radius:999px;padding:9px 14px;font:inherit;font-size:14px;font-weight:700;cursor:pointer;min-height:40px}
-.chip[aria-pressed=true]{background:var(--violet-d);border-color:var(--violet);color:#fff}
-.chip[aria-pressed=true]::before{content:"✓ ";color:var(--gold)}
-.addrow{display:flex;gap:8px;margin-top:10px}
-.addrow input{flex:1;padding:10px 14px;font-size:15px}
-.btn{border:0;border-radius:14px;font:inherit;font-weight:800;cursor:pointer;padding:12px 18px;min-height:44px}
-.btn.ghost{background:var(--panel2);color:var(--lav);border:1.5px solid var(--line)}
-.btn.gold{background:var(--gold);color:#2a1450}
-.btn.gold:active{background:var(--gold-d)}
-.btn.sm{padding:8px 14px;min-height:38px;font-size:14px}
-.btn:disabled{opacity:.55;cursor:wait}
-
-.bar{position:fixed;left:0;right:0;bottom:0;background:linear-gradient(0deg,var(--bg) 70%,rgba(21,9,41,0));padding:26px 16px calc(14px + env(safe-area-inset-bottom));z-index:10}
-.bar .in{max-width:720px;margin:0 auto;display:flex;gap:10px}
-.bar .btn.gold{flex:1;font-size:17px;min-height:52px;border-radius:18px;box-shadow:0 8px 24px rgba(255,207,92,.25)}
-.bar .btn.ghost{min-height:52px;border-radius:18px}
-
-#out{margin-top:22px;scroll-margin-top:12px}
-.card{background:var(--panel);border:1.5px solid var(--line);border-radius:22px;padding:16px 18px;margin-bottom:12px}
-.card h2{font-size:18px;color:#fff;font-weight:900}
-.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:10px 0}
-pre.prompt{white-space:pre-wrap;word-wrap:break-word;font:inherit;font-size:14px;line-height:1.6;background:var(--bg);border:1.5px solid var(--line);border-radius:14px;padding:14px;max-height:360px;overflow:auto;color:#e6dcff}
-.scene h3{font-size:16px;color:var(--gold);font-weight:900;margin-bottom:8px}
-.lbl{font-size:12px;font-weight:800;color:var(--mute);margin:10px 0 4px;text-transform:none}
-.scene p{font-size:14.5px;white-space:pre-wrap}
-.narasi{background:#2f1a5c;border-left:4px solid var(--gold);border-radius:10px;padding:10px 12px}
-.status{font-size:14px;color:var(--mute);margin:8px 0}
-.status.err{color:var(--err)}
-.progress{height:8px;background:var(--bg);border-radius:99px;overflow:hidden;margin:10px 0}
-.progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--violet),var(--gold));transition:width .3s}
-.toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%);background:var(--gold);color:#2a1450;font-weight:800;padding:10px 18px;border-radius:99px;z-index:20;opacity:0;pointer-events:none;transition:opacity .2s}
-.toast.show{opacity:1}
-@media (prefers-reduced-motion:reduce){*{transition:none!important}}
-</style>
+<link rel="stylesheet" href="style.css?v=6">
 </head>
 <body>
+<div class="bar"><div class="in">
+  <button class="btn ghost" id="resetBtn" type="button">Reset</button>
+  <button class="btn gold" id="buildBtn" type="button">Buat prompt</button>
+</div></div>
+<div class="toast" id="toast">Tersalin</div>
 <div class="wrap">
   <header>
     <div class="logo" role="img" aria-label="Storybook Generator">📖</div>
@@ -94,30 +22,38 @@ pre.prompt{white-space:pre-wrap;word-wrap:break-word;font:inherit;font-size:14px
     </div>
   </header>
 
-  <noscript><div class="card"><h2>JavaScript nonaktif</h2><p class="status">Aktifkan JavaScript di browser agar opsi tampil.</p></div></noscript>
-  <form id="form" onsubmit="return false"><details open=""><summary><span>Cerita<span class="sub">judul sampai jumlah scene</span></span></summary><div class="body"><div class="field"><label class="l" for="f_judul">Judul cerita</label>
-          <select id="f_judul"><option value="Kelinci Kecil yang Pemberani" selected="">Kelinci Kecil yang Pemberani</option><option value="Bintang yang Hilang di Langit Malam">Bintang yang Hilang di Langit Malam</option><option value="Si Beruang dan Madu Ajaib">Si Beruang dan Madu Ajaib</option><option value="Petualangan Kucing Kecil di Taman Pelangi">Petualangan Kucing Kecil di Taman Pelangi</option><option value="Ikan Kecil Mencari Samudra">Ikan Kecil Mencari Samudra</option><option value="Rubah Kecil dan Lentera Hutan">Rubah Kecil dan Lentera Hutan</option><option value="Gajah Kecil yang Takut Gelap">Gajah Kecil yang Takut Gelap</option><option value="Naga Mungil Belajar Terbang">Naga Mungil Belajar Terbang</option><option value="__custom__">✏️ Isi sendiri…</option></select>
-          <div class="custom hidden" id="c_judul"><input type="text" id="ci_judul" placeholder="Tulis sendiri: judul cerita" autocomplete="off"></div></div><div class="field"><label class="l" for="f_tema">Tema cerita</label>
-          <select id="f_tema"><option value="Persahabatan dan Petualangan" selected="">Persahabatan dan Petualangan</option><option value="Kebaikan dan Berbagi">Kebaikan dan Berbagi</option><option value="Keberanian">Keberanian</option><option value="Rasa Ingin Tahu">Rasa Ingin Tahu</option><option value="Kerja Sama">Kerja Sama</option><option value="Menghadapi Rasa Takut">Menghadapi Rasa Takut</option><option value="Kejujuran">Kejujuran</option><option value="Cinta Lingkungan">Cinta Lingkungan</option><option value="Mengenal Emosi">Mengenal Emosi</option><option value="Cerita Pengantar Tidur">Cerita Pengantar Tidur</option><option value="Mengenal Keluarga">Mengenal Keluarga</option><option value="Hari Pertama Sekolah">Hari Pertama Sekolah</option><option value="__custom__">✏️ Isi sendiri…</option></select>
-          <div class="custom hidden" id="c_tema"><input type="text" id="ci_tema" placeholder="Tulis sendiri: tema cerita" autocomplete="off"></div></div><div class="field"><label class="l" for="f_tokoh">Tokoh utama</label>
-          <select id="f_tokoh"><option value="Seekor kelinci kecil, seekor burung biru, dan kura-kura bijaksana" selected="">Seekor kelinci kecil, seekor burung biru, dan kura-kura bijaksana</option><option value="Anak beruang, kelinci putih, dan burung hantu">Anak beruang, kelinci putih, dan burung hantu</option><option value="Anak perempuan kecil dan naga ramah">Anak perempuan kecil dan naga ramah</option><option value="Anak laki-laki dan robot kecil">Anak laki-laki dan robot kecil</option><option value="Kucing kecil, anjing setia, dan kupu-kupu">Kucing kecil, anjing setia, dan kupu-kupu</option><option value="Gajah kecil dan monyet jenaka">Gajah kecil dan monyet jenaka</option><option value="Seekor ikan kecil, penyu, dan lumba-lumba">Seekor ikan kecil, penyu, dan lumba-lumba</option><option value="Rubah kecil, kunang-kunang, dan tupai">Rubah kecil, kunang-kunang, dan tupai</option><option value="__custom__">✏️ Isi sendiri…</option></select>
-          <div class="custom hidden" id="c_tokoh"><input type="text" id="ci_tokoh" placeholder="Tulis sendiri: tokoh utama" autocomplete="off"></div></div><div class="field"><label class="l" for="f_latar">Latar tempat</label>
-          <select id="f_latar"><option value="Hutan ajaib yang dipenuhi bunga warna-warni dan pepohonan besar" selected="">Hutan ajaib yang dipenuhi bunga warna-warni dan pepohonan besar</option><option value="Taman bunga dengan pelangi dan kupu-kupu">Taman bunga dengan pelangi dan kupu-kupu</option><option value="Desa kecil di tepi danau">Desa kecil di tepi danau</option><option value="Kastel di atas awan">Kastel di atas awan</option><option value="Lautan dengan terumbu karang berwarna">Lautan dengan terumbu karang berwarna</option><option value="Padang savana saat senja">Padang savana saat senja</option><option value="Pegunungan bersalju yang hangat">Pegunungan bersalju yang hangat</option><option value="Sekolah dan taman bermain">Sekolah dan taman bermain</option><option value="Kamar tidur penuh mainan">Kamar tidur penuh mainan</option><option value="Luar angkasa penuh bintang dan planet">Luar angkasa penuh bintang dan planet</option><option value="__custom__">✏️ Isi sendiri…</option></select>
-          <div class="custom hidden" id="c_latar"><input type="text" id="ci_latar" placeholder="Tulis sendiri: latar tempat" autocomplete="off"></div></div><div class="field"><label class="l" for="f_adegan">Adegan utama</label>
-          <select id="f_adegan"><option value="Kelinci kecil membantu burung biru yang tersesat mencari keluarganya di dalam hutan." selected="">Kelinci kecil membantu burung biru yang tersesat mencari keluarganya di dalam hutan.</option><option value="Anak beruang mencari madu ajaib dan bertemu teman-teman baru.">Anak beruang mencari madu ajaib dan bertemu teman-teman baru.</option><option value="Seorang anak dan naga ramah belajar terbang bersama.">Seorang anak dan naga ramah belajar terbang bersama.</option><option value="Anak kucing menemukan peta harta karun di taman.">Anak kucing menemukan peta harta karun di taman.</option><option value="Ikan kecil menjelajah lautan untuk menemukan rumah barunya.">Ikan kecil menjelajah lautan untuk menemukan rumah barunya.</option><option value="Sekelompok hewan bekerja sama membangun jembatan setelah hujan badai.">Sekelompok hewan bekerja sama membangun jembatan setelah hujan badai.</option><option value="__custom__">✏️ Isi sendiri…</option></select>
-          <div class="custom hidden" id="c_adegan"><input type="text" id="ci_adegan" placeholder="Tulis sendiri: adegan utama" autocomplete="off"></div></div><div class="field"><label class="l">Ekspresi karakter</label><div class="chips" id="ch_ekspresi"><button type="button" class="chip" aria-pressed="true">Penasaran</button><button type="button" class="chip" aria-pressed="true">Berani</button><button type="button" class="chip" aria-pressed="true">Bahagia</button><button type="button" class="chip" aria-pressed="false">Terkejut</button><button type="button" class="chip" aria-pressed="false">Mengantuk</button><button type="button" class="chip" aria-pressed="false">Takut</button><button type="button" class="chip" aria-pressed="false">Bangga</button><button type="button" class="chip" aria-pressed="false">Tertawa</button><button type="button" class="chip" aria-pressed="false">Menangis</button><button type="button" class="chip" aria-pressed="false">Kagum</button><button type="button" class="chip" aria-pressed="false">Berpikir</button><button type="button" class="chip" aria-pressed="false">Bersemangat</button></div>
-          <div class="addrow"><input type="text" id="ai_ekspresi" placeholder="Tambah sendiri…" autocomplete="off"><button class="btn ghost sm" type="button" id="ab_ekspresi">Tambah</button></div></div><div class="field"><label class="l" for="f_pesan">Pesan edukasi</label>
-          <select id="f_pesan"><option value="Selalu menolong teman yang membutuhkan." selected="">Selalu menolong teman yang membutuhkan.</option><option value="Jujur itu membuat hati tenang.">Jujur itu membuat hati tenang.</option><option value="Berani mencoba hal baru.">Berani mencoba hal baru.</option><option value="Berbagi membuat semua bahagia.">Berbagi membuat semua bahagia.</option><option value="Menghargai perbedaan.">Menghargai perbedaan.</option><option value="Menjaga alam adalah tugas kita semua.">Menjaga alam adalah tugas kita semua.</option><option value="Tidak apa-apa meminta tolong.">Tidak apa-apa meminta tolong.</option><option value="Bekerja sama membuat kita kuat.">Bekerja sama membuat kita kuat.</option><option value="Sabar dan tekun akan membuahkan hasil.">Sabar dan tekun akan membuahkan hasil.</option><option value="__custom__">✏️ Isi sendiri…</option></select>
-          <div class="custom hidden" id="c_pesan"><input type="text" id="ci_pesan" placeholder="Tulis sendiri: pesan edukasi" autocomplete="off"></div></div><div class="field"><label class="l">Nilai positif tambahan</label><div class="chips" id="ch_nilai"><button type="button" class="chip" aria-pressed="true">Kebaikan</button><button type="button" class="chip" aria-pressed="true">Persahabatan</button><button type="button" class="chip" aria-pressed="true">Empati</button><button type="button" class="chip" aria-pressed="false">Kreativitas</button><button type="button" class="chip" aria-pressed="false">Rasa ingin tahu</button><button type="button" class="chip" aria-pressed="true">Kerja sama</button><button type="button" class="chip" aria-pressed="false">Tanggung jawab</button><button type="button" class="chip" aria-pressed="false">Percaya diri</button><button type="button" class="chip" aria-pressed="false">Kemandirian</button><button type="button" class="chip" aria-pressed="false">Rasa hormat</button><button type="button" class="chip" aria-pressed="false">Memecahkan masalah</button><button type="button" class="chip" aria-pressed="false">Syukur</button></div>
-          <div class="addrow"><input type="text" id="ai_nilai" placeholder="Tambah sendiri…" autocomplete="off"><button class="btn ghost sm" type="button" id="ab_nilai">Tambah</button></div></div><div class="field"><label class="l" for="f_jumlah">Jumlah scene</label>
-          <select id="f_jumlah"><option value="4">4</option><option value="6">6</option><option value="8" selected="">8</option><option value="10">10</option><option value="12">12</option><option value="14">14</option><option value="16">16</option><option value="20">20</option><option value="24">24</option><option value="__custom__">✏️ Isi sendiri…</option></select>
-          <div class="custom hidden" id="c_jumlah"><input type="text" id="ci_jumlah" placeholder="Tulis sendiri: jumlah scene" autocomplete="off"></div></div></div></details><details><summary><span>Buku dan format<span class="sub">usia, rasio, ukuran</span></span></summary><div class="body"><div class="field"><label class="l" for="f_usia">Usia pembaca</label>
-          <select id="f_usia"><option value="3–7 tahun" selected="">3–7 tahun</option><option value="0–2 tahun (bayi dan balita)">0–2 tahun (bayi dan balita)</option><option value="2–4 tahun">2–4 tahun</option><option value="4–6 tahun">4–6 tahun</option><option value="5–8 tahun">5–8 tahun</option><option value="6–9 tahun">6–9 tahun</option><option value="8–12 tahun">8–12 tahun</option><option value="Semua usia (keluarga)">Semua usia (keluarga)</option><option value="__custom__">✏️ Isi sendiri…</option></select>
-          <div class="custom hidden" id="c_usia"><input type="text" id="ci_usia" placeholder="Tulis sendiri: usia pembaca" autocomplete="off"></div></div><div class="field"><label class="l" for="f_rasio">Rasio gambar</label>
-          <select id="f_rasio"><option value="1:1 (persegi)" selected="">1:1 (persegi)</option><option value="4:3 (landscape)">4:3 (landscape)</option><option value="3:4 (portrait)">3:4 (portrait)</option><option value="16:9 (lebar sinematik)">16:9 (lebar sinematik)</option><option value="9:16 (vertikal, layar ponsel)">9:16 (vertikal, layar ponsel)</option><option value="3:2 (landscape)">3:2 (landscape)</option><option value="2:3 (portrait)">2:3 (portrait)</option><option value="4:5 (portrait)">4:5 (portrait)</option><option value="2:1 (panorama dua halaman)">2:1 (panorama dua halaman)</option><option value="21:9 (ultra lebar)">21:9 (ultra lebar)</option><option value="__custom__">✏️ Isi sendiri…</option></select>
-          <div class="custom hidden" id="c_rasio"><input type="text" id="ci_rasio" placeholder="Tulis sendiri: rasio gambar" autocomplete="off"></div></div><div class="field"><label class="l" for="f_ukuran">Ukuran cetak</label>
-          <select id="f_ukuran"><option value="20 × 20 cm" selected="">20 × 20 cm</option><option value="15 × 15 cm">15 × 15 cm</option><option value="21 × 21 cm">21 × 21 cm</option><option value="25 × 25 cm">25 × 25 cm</option><option value="A5 (14,8 × 21 cm)">A5 (14,8 × 21 cm)</option><option value="A4 (21 × 29,7 cm)">A4 (21 × 29,7 cm)</option><option value="20 × 25 cm">20 × 25 cm</option><option value="Hanya digital (tanpa ukuran cetak)">Hanya digital (tanpa ukuran cetak)</option><option value="__custom__">✏️ Isi sendiri…</option></select>
-          <div class="custom hidden" id="c_ukuran"><input type="text" id="ci_ukuran" placeholder="Tulis sendiri: ukuran cetak" autocomplete="off"></div></div><div class="field"><label class="l" for="f_halaman">Komposisi halaman</label>
-          <select id="f_halaman"><option value="1 halaman penuh (full one-page) dengan ilustrasi full-bleed" selected="">1 halaman penuh (full one-page) dengan ilustrasi full-bleed</option><option value="Double spread, ilustrasi menyatu mulus di kedua halaman">Double spread, ilustrasi menyatu mulus di kedua halaman</option><option value="Satu halaman dengan bingkai bulat">Satu halaman dengan bingkai bulat</option><option value="Panel bertingkat seperti komik">Panel bertingkat seperti komik</option><option value="__custom__">✏️ Isi sendiri…</option></select>
-          <div class="custom hidden" id="c_halaman"><input type="text" id="ci_halaman" placeholder="Tulis sendiri: komposisi halaman" autocomplete="off"></div></div><div class="field"><label class="l" for="f_jenis">Jenis buku</label>
-          <select id="f_jenis"><option va
+  <form id="form" onsubmit="return false"></form>
+
+  <section id="out" class="hidden" aria-live="polite">
+    <div class="card">
+      <h2>Prompt master</h2>
+      <p class="status">ChatGPT terbuka otomatis dengan prompt terisi. Tinggal tekan kirim. Jika tab tidak terbuka, pakai tombol Buka ChatGPT.</p>
+      <div class="row">
+        <a class="btn gold sm" id="openGpt" href="https://chatgpt.com/" target="_blank" rel="noopener" style="text-decoration:none;display:inline-flex;align-items:center">Buka ChatGPT</a>
+        <button class="btn ghost sm" id="copyMaster">Salin prompt</button>
+        <button class="btn ghost sm" id="dlMaster">Unduh .txt</button>
+      </div>
+      <pre class="prompt" id="masterText"></pre>
+    </div>
+
+    <div class="card">
+      <h2>Prompt per scene</h2>
+      <p class="status">Claude menulis prompt cover (tanpa narasi) dan prompt + narasi untuk tiap scene.</p>
+      <div class="row">
+        <button class="btn gold sm" id="genScenes">Buat prompt semua scene</button>
+        <button class="btn ghost sm hidden" id="copyAll">Salin semua</button>
+      </div>
+      <div class="progress hidden" id="prog"><i></i></div>
+      <div class="status" id="genStatus"></div>
+    </div>
+    <div id="scenes"></div>
+  </section>
+
+  <p class="foot">Storybook Generator by <strong>evegrow.digital</strong></p>
+</div>
+<script src="data.js?v=6"></script>
+<script src="builder.js?v=6"></script>
+<script src="app.js?v=6"></script>
+</body>
+                                           </html>
+                                               
